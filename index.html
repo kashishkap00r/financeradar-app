@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FinanceRadar</title>
+  <meta name="color-scheme" content="dark light" />
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#0f1620;
+      --panel2:#0c121a;
+      --text:#e9eef7;
+      --muted:#9fb0c8;
+      --muted2:#6f819a;
+      --border:rgba(255,255,255,.08);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --accent:#7c5cff;
+      --accent2:#2de1c2;
+      --good:#39d98a;
+      --warn:#ffcc66;
+      --bad:#ff6b6b;
+      --chip: rgba(124,92,255,.15);
+      --chipBorder: rgba(124,92,255,.25);
+      --radius: 18px;
+      --radius2: 14px;
+    }
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg:#f6f7fb;
+        --panel:#ffffff;
+        --panel2:#fbfcff;
+        --text:#111827;
+        --muted:#4b5563;
+        --muted2:#6b7280;
+        --border:rgba(17,24,39,.10);
+        --shadow: 0 10px 30px rgba(17,24,39,.12);
+        --chip: rgba(124,92,255,.10);
+        --chipBorder: rgba(124,92,255,.18);
+      }
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 20% -10%, rgba(124,92,255,.18), transparent 60%),
+                  radial-gradient(900px 700px at 90% 0%, rgba(45,225,194,.14), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      letter-spacing:.2px;
+    }
+
+    .wrap{
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 18px 16px 48px;
+    }
+
+    /* Top bar */
+    .topbar{
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(to bottom, rgba(11,15,20,.85), rgba(11,15,20,.65));
+      border-bottom: 1px solid var(--border);
+      padding: 14px 16px;
+      margin: 0 -16px 18px;
+    }
+    @media (prefers-color-scheme: light){
+      .topbar{ background: linear-gradient(to bottom, rgba(246,247,251,.92), rgba(246,247,251,.7)); }
+    }
+
+    .row{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width: 240px;
+    }
+    .logo{
+      width: 34px; height: 34px;
+      border-radius: 10px;
+      background:
+        radial-gradient(12px 12px at 30% 35%, rgba(255,255,255,.85), transparent 55%),
+        linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 10px 25px rgba(124,92,255,.25);
+    }
+    .titleWrap{display:flex; flex-direction:column; line-height:1.1}
+    .title{
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: .3px;
+    }
+    .subtitle{
+      font-size: 12px;
+      color: var(--muted2);
+      margin-top: 3px;
+    }
+
+    .controls{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .seg{
+      display:flex;
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 4px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+    }
+    @media (prefers-color-scheme: light){
+      .seg{ background: rgba(17,24,39,.04); }
+    }
+    .seg button{
+      border:0;
+      background: transparent;
+      color: var(--muted);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      cursor:pointer;
+      transition: .15s ease;
+    }
+    .seg button.active{
+      background: linear-gradient(135deg, rgba(124,92,255,.25), rgba(45,225,194,.14));
+      color: var(--text);
+      box-shadow: 0 8px 18px rgba(0,0,0,.15);
+    }
+    .seg button:hover{ color: var(--text); }
+
+    .search{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      min-width: 260px;
+      flex: 1;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+    }
+    @media (prefers-color-scheme: light){
+      .search{ background: rgba(17,24,39,.03); }
+    }
+    .search input{
+      border:0;
+      outline:0;
+      width:100%;
+      background: transparent;
+      color: var(--text);
+      font-size: 13px;
+    }
+    .search .hint{
+      color: var(--muted2);
+      font-size: 11px;
+      white-space:nowrap;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 3px 6px;
+    }
+
+    .btn{
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      cursor:pointer;
+      transition: .15s ease;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    @media (prefers-color-scheme: light){
+      .btn{ background: rgba(17,24,39,.03); }
+    }
+    .btn:hover{ transform: translateY(-1px); box-shadow: var(--shadow); }
+    .btn:active{ transform: translateY(0); }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      white-space:nowrap;
+    }
+
+    /* Content */
+    .meta{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin: 10px 0 18px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .meta strong{ color: var(--text); font-weight: 700; }
+    .meta .right{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+
+    .day{
+      margin-top: 18px;
+      margin-bottom: 8px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .day h2{
+      margin:0;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--muted2);
+    }
+    .day .line{
+      height:1px;
+      flex:1;
+      background: var(--border);
+    }
+
+    .list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 14px;
+      box-shadow: 0 1px 0 rgba(255,255,255,.06);
+      transition: .15s ease;
+    }
+    @media (prefers-color-scheme: light){
+      .card{
+        background: linear-gradient(180deg, rgba(255,255,255,1), rgba(251,252,255,1));
+      }
+    }
+    .card:hover{
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+      border-color: rgba(124,92,255,.35);
+    }
+
+    .cardTop{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:flex-start;
+    }
+    .headline{
+      margin:0;
+      font-size: 14px;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+    .headline a{
+      color: var(--text);
+      text-decoration:none;
+    }
+    .headline a:hover{ text-decoration:underline; }
+
+    .score{
+      min-width: 84px;
+      text-align:right;
+      color: var(--muted2);
+      font-size: 11px;
+    }
+    .score .num{
+      color: var(--text);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: .3px;
+    }
+
+    .sub{
+      margin-top: 8px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--chip);
+      border: 1px solid var(--chipBorder);
+      color: var(--text);
+      font-size: 11px;
+    }
+    .muted{ color: var(--muted2); }
+
+    .why{
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .state{
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius);
+      padding: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+    }
+
+    .footer{
+      margin-top: 26px;
+      color: var(--muted2);
+      font-size: 12px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 11px;
+      border: 1px solid var(--border);
+      border-bottom-color: rgba(255,255,255,.18);
+      padding: 2px 6px;
+      border-radius: 6px;
+      color: var(--muted);
+      background: rgba(255,255,255,.03);
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="wrap">
+      <div class="row">
+        <div class="brand">
+          <div class="logo"></div>
+          <div class="titleWrap">
+            <div class="title">FinanceRadar</div>
+            <div class="subtitle">Ranked links from your feeds</div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <div class="seg" id="daysSeg">
+            <button data-days="1">1D</button>
+            <button data-days="2">2D</button>
+            <button data-days="5" class="active">5D</button>
+          </div>
+
+          <div class="search">
+            <input id="q" placeholder="Search titles, sources, tags…" autocomplete="off" />
+            <span class="hint"><span class="kbd">/</span></span>
+          </div>
+
+          <button class="btn" id="refreshBtn" title="Refresh (R)">
+            ⟳ Refresh
+          </button>
+        </div>
+      </div>
+
+      <div class="meta">
+        <div id="metaLeft">Loading…</div>
+        <div class="right">
+          <span class="pill" id="metaSpeed">—</span>
+          <span class="pill" id="metaStats">—</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div id="content" class="state">Fetching ranked candidates…</div>
+
+    <div class="footer">
+      <div>
+        Tips: press <span class="kbd">/</span> to search, <span class="kbd">R</span> to refresh, <span class="kbd">Esc</span> to clear search.
+      </div>
+      <div class="muted">
+        Uses <code>/api/candidates</code> as the single source of truth.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // CONFIG: point this at your candidates endpoint.
+    // If your dashboard is hosted separately, keep it absolute.
+    const API_BASE = "https://financeradar.pages.dev/api/candidates";
+
+    let state = {
+      days: 5,
+      q: "",
+      data: null,
+      fetchedAt: null
+    };
+
+    const el = (id) => document.getElementById(id);
+
+    function formatDay(dayStr){
+      // dayStr = YYYY-MM-DD
+      try{
+        const d = new Date(dayStr + "T00:00:00");
+        return d.toLocaleDateString(undefined, { weekday:"short", month:"short", day:"numeric" });
+      }catch{ return dayStr; }
+    }
+
+    function hostFromUrl(url){
+      try { return new URL(url).hostname.replace(/^www\./,""); }
+      catch { return ""; }
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function setDays(days){
+      state.days = days;
+      document.querySelectorAll("#daysSeg button").forEach(b=>{
+        b.classList.toggle("active", Number(b.dataset.days) === days);
+      });
+      fetchAndRender();
+    }
+
+    function setQuery(q){
+      state.q = q.trim().toLowerCase();
+      render();
+    }
+
+    function applyFilter(groups){
+      if(!state.q) return groups;
+
+      const q = state.q;
+      const out = [];
+      for(const g of groups){
+        const items = g.items.filter(it=>{
+          const title = (it.title || "").toLowerCase();
+          const feed = (it.feed?.title || "").toLowerCase();
+          const tags = (it.tags || []).join(" ").toLowerCase();
+          const why = (it.why || "").toLowerCase();
+          const domain = hostFromUrl(it.url).toLowerCase();
+          return title.includes(q) || feed.includes(q) || tags.includes(q) || why.includes(q) || domain.includes(q);
+        });
+        if(items.length) out.push({ day: g.day, items });
+      }
+      return out;
+    }
+
+    function render(){
+      const content = el("content");
+      if(!state.data){
+        content.className = "state";
+        content.textContent = "Fetching ranked candidates…";
+        return;
+      }
+
+      const meta = state.data.meta || {};
+      const groupsRaw = state.data.groups || [];
+      const groups = applyFilter(groupsRaw);
+
+      // meta bar
+      const fetchedLabel = state.fetchedAt
+        ? state.fetchedAt.toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" })
+        : "—";
+      el("metaLeft").innerHTML =
+        `Showing <strong>${(state.data.top || []).length}</strong> ranked items over <strong>${state.days} days</strong> · Updated <strong>${fetchedLabel}</strong>`;
+
+      const t = meta.timing || {};
+      const ms = typeof t.total_ms === "number" ? t.total_ms : null;
+      el("metaSpeed").textContent = ms !== null ? `API ${ms} ms` : "API —";
+
+      el("metaStats").textContent =
+        `Fetched ${meta.raw_fetched ?? "—"} · Pages ${meta.pages_fetched ?? "—"} · Clusters ${meta.clusters ?? "—"}`;
+
+      if(!groups.length){
+        content.className = "state";
+        content.textContent = state.q
+          ? "No results match your search."
+          : "No items returned. Try increasing days.";
+        return;
+      }
+
+      // build UI
+      const parts = [];
+      for(const g of groups){
+        parts.push(`
+          <div class="day">
+            <h2>${escapeHtml(formatDay(g.day))}</h2>
+            <div class="line"></div>
+          </div>
+          <div class="list">
+            ${g.items.map(renderItem).join("")}
+          </div>
+        `);
+      }
+
+      content.className = "";
+      content.innerHTML = parts.join("");
+    }
+
+    function renderItem(it){
+      const title = escapeHtml(it.title || "");
+      const url = it.url || "#";
+      const feedTitle = escapeHtml(it.feed?.title || hostFromUrl(url) || "Source");
+      const domain = escapeHtml(hostFromUrl(url));
+      const why = escapeHtml(it.why || "");
+      const score = typeof it.score === "number" ? it.score.toFixed(2) : "";
+      const age = typeof it.age_hours === "number" ? `${it.age_hours}h` : "";
+
+      const tags = Array.isArray(it.tags) ? it.tags.slice(0, 3) : [];
+      const tagChips = tags.map(t=>`<span class="chip">#${escapeHtml(t)}</span>`).join("");
+
+      const mentions = it.mentions ?? 1;
+      const sources = it.sources_count ?? 1;
+
+      return `
+        <div class="card">
+          <div class="cardTop">
+            <h3 class="headline">
+              <a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${title}</a>
+            </h3>
+            <div class="score">
+              <div class="num">${score}</div>
+              <div class="muted">${age}</div>
+            </div>
+          </div>
+
+          <div class="sub">
+            <span class="chip">📰 ${feedTitle}</span>
+            ${domain ? `<span class="pill">${domain}</span>` : ""}
+            <span class="pill">mentions ${mentions}</span>
+            <span class="pill">sources ${sources}</span>
+            ${tagChips}
+          </div>
+
+          ${why ? `<div class="why">${why}</div>` : ""}
+        </div>
+      `;
+    }
+
+    async function fetchCandidates(){
+      // Keep URL stable to maximize caching
+      const url = new URL(API_BASE);
+      url.searchParams.set("days", String(state.days));
+      // You set default top in API; optionally force top=100 from UI by uncommenting:
+      // url.searchParams.set("top", "100");
+
+      const resp = await fetch(url.toString(), { cache: "no-store" });
+      const data = await resp.json();
+      if(!resp.ok){
+        const msg = data?.error ? `${data.error}` : `HTTP ${resp.status}`;
+        throw new Error(msg);
+      }
+      return data;
+    }
+
+    async function fetchAndRender(){
+      const content = el("content");
+      content.className = "state";
+      content.textContent = "Fetching ranked candidates…";
+
+      try{
+        const data = await fetchCandidates();
+        state.data = data;
+        state.fetchedAt = new Date();
+        render();
+      }catch(err){
+        state.data = null;
+        content.className = "state";
+        content.textContent = `Failed to load: ${err.message || err}`;
+      }
+    }
+
+    // Events
+    document.querySelectorAll("#daysSeg button").forEach(btn=>{
+      btn.addEventListener("click", () => setDays(Number(btn.dataset.days)));
+    });
+
+    el("q").addEventListener("input", (e)=> setQuery(e.target.value));
+
+    el("refreshBtn").addEventListener("click", fetchAndRender);
+
+    // Keyboard shortcuts
+    window.addEventListener("keydown", (e)=>{
+      if(e.key === "/" && document.activeElement !== el("q")){
+        e.preventDefault();
+        el("q").focus();
+      }
+      if((e.key === "r" || e.key === "R") && document.activeElement !== el("q")){
+        fetchAndRender();
+      }
+      if(e.key === "Escape"){
+        el("q").value = "";
+        setQuery("");
+        el("q").blur();
+      }
+    });
+
+    // Initial load
+    fetchAndRender();
+  </script>
+</body>
+</html>
