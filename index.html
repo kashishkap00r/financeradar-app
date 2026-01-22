@@ -396,6 +396,17 @@
       font-size: var(--fs-small);
       padding: 0 6px;
     }
+    .credits a{
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1px;
+}
+
+.credits a:hover{
+  border-bottom-color: rgba(124,92,255,.45);
+}
+
 
     code{ color: var(--muted); }
   </style>
@@ -452,9 +463,16 @@
       <div id="content" class="state">Fetching items…</div>
 
       <div class="credits">
-        <div>Made by Kashish Kapoor</div>
-        <div>Made for The Daily Brief by Zerodha</div>
-      </div>
+  <div>
+    Made by
+    <a href="https://kashishkapoor.com/" target="_blank" rel="noopener noreferrer">Kashish Kapoor</a>
+  </div>
+  <div>
+    Made for
+    <a href="https://thedailybrief.zerodha.com/" target="_blank" rel="noopener noreferrer">The Daily Brief</a>
+    by Zerodha
+  </div>
+</div>
     </div>
 
   </div>
