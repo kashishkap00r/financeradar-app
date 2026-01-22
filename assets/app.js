@@ -1,5 +1,6 @@
 // assets/app.js
 // All logic lives here: fetch, render, filters, pagination, events, localStorage, theme.
+// Adds: "Shuffle" (front-end only) to randomize the 500 items without touching backend.
 
 (() => {
   const CFG = window.IFR_CONFIG || {};
@@ -50,7 +51,17 @@
   const store = loadStore();
   function saveStore(){ localStorage.setItem(STORE_KEY, JSON.stringify(store)); }
 
+  // ---------- Shuffle helper (unbiased Fisher–Yates) ----------
+  function shuffleInPlace(arr){
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
   // ---------- App state ----------
+  // state.order = array of item ids representing current display order (API order by default).
   let state = {
     q: "",
     source: "",
@@ -59,7 +70,8 @@
     starOnly: false,
     data: null,
     fetchedAt: null,
-    page: 1
+    page: 1,
+    order: null
   };
 
   // ---------- Utilities ----------
@@ -188,7 +200,14 @@
     }
 
     const allItems = Array.isArray(state.data.items) ? state.data.items : [];
-    const filtered = applyFilters(allItems);
+
+    // Respect current ordering (API order by default; shuffled order when user clicks Shuffle)
+    const byId = new Map(allItems.map(it => [String(it.id ?? ""), it]));
+    const orderedAll = Array.isArray(state.order)
+      ? state.order.map(id => byId.get(id)).filter(Boolean)
+      : allItems;
+
+    const filtered = applyFilters(orderedAll);
 
     const sourcesCount = new Set(allItems.map(it => it.feed?.title).filter(Boolean)).size;
     const lastUpdated = state.fetchedAt ? fmtTime(state.fetchedAt) : "—";
@@ -316,6 +335,11 @@
       state.page = 1;
 
       const items = Array.isArray(data.items) ? data.items : [];
+
+      // Default display order = whatever API returns (currently recency).
+      // Shuffle button will overwrite state.order with a randomized list of ids.
+      state.order = items.map(it => String(it.id ?? ""));
+
       buildFilters(items);
       render();
     }catch(err){
@@ -333,6 +357,22 @@
 
   el("hideRead").addEventListener("change", (e)=> { state.hideRead = e.target.checked; state.page = 1; render(); });
   el("starOnly").addEventListener("change", (e)=> { state.starOnly = e.target.checked; state.page = 1; render(); });
+
+  // Shuffle (frontend only)
+  const shuffleBtn = el("shuffleBtn");
+  if (shuffleBtn) {
+    shuffleBtn.addEventListener("click", () => {
+      if(!state.data || !Array.isArray(state.data.items)) return;
+
+      // Shuffle the FULL dataset order (not just current page).
+      const ids = state.data.items.map(it => String(it.id ?? ""));
+      state.order = shuffleInPlace(ids);
+
+      state.page = 1;
+      render();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
 
   el("refreshBtn").addEventListener("click", fetchAndRender);
   el("themeBtn").addEventListener("click", toggleTheme);
