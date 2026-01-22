@@ -1,0 +1,52 @@
+/* =========================
+  Clean UI
+  - No gradients
+  - Depth via spacing + subtle shadows
+  - Light default, dark optional
+========================= */
+
+:root{
+  --bg: #f3f5f8;
+  --panel: #ffffff;
+  --panel2: #ffffff;
+  --text: #101828;
+  --muted: #475467;
+  --muted2:#667085;
+
+  --border: rgba(16,24,40,.10);
+  --shadow: 0 10px 25px rgba(16,24,40,.08);
+  --shadow2: 0 4px 14px rgba(16,24,40,.08);
+
+  --accent: #7c5cff;
+  --accentSoft: rgba(124,92,255,.10);
+
+  --chipBg: rgba(124,92,255,.10);
+  --chipBorder: rgba(124,92,255,.18);
+
+  --radius: 18px;
+  --radius2: 12px;
+
+  /* Slightly larger overall */
+  --fs-title: 22px;
+  --fs-body: 15px;
+  --fs-small: 13px;
+  --fs-micro: 12px;
+}
+
+html[data-theme="dark"]{
+  --bg: #0b0f14;
+  --panel: #0f1620;
+  --panel2: #0f1620;
+  --text: #e9eef7;
+  --muted: #9fb0c8;
+  --muted2:#7f93af;
+
+  --border: rgba(255,255,255,.08);
+  --shadow: 0 14px 30px rgba(0,0,0,.45);
+  --shadow2: 0 6px 18px rgba(0,0,0,.35);
+
+  --accent: #7c5cff;
+  --accentSoft: rgba(124,92,255,.15);
+
+  --chipBg: rgba(124,92,255,.14);
+  --chipBorder: rgba(124,92,
