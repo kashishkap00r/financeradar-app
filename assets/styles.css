@@ -96,6 +96,13 @@ body{
   font-size: var(--fs-small);
 }
 
+.tagline{
+  max-width: 680px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
 .topActions{
   display:flex;
   gap:10px;
