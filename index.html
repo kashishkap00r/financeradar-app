@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FinanceRadar</title>
+  <title>Indian Finance Radar</title>
   <meta name="color-scheme" content="dark light" />
   <style>
     :root{
@@ -17,13 +17,11 @@
       --shadow: 0 10px 30px rgba(0,0,0,.35);
       --accent:#7c5cff;
       --accent2:#2de1c2;
-      --good:#39d98a;
-      --warn:#ffcc66;
-      --bad:#ff6b6b;
       --chip: rgba(124,92,255,.15);
       --chipBorder: rgba(124,92,255,.25);
-      --radius: 18px;
-      --radius2: 14px;
+      --radius: 16px;
+      --radius2: 12px;
+      --danger:#ff6b6b;
     }
     @media (prefers-color-scheme: light){
       :root{
@@ -45,66 +43,60 @@
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      background: radial-gradient(1200px 800px at 20% -10%, rgba(124,92,255,.18), transparent 60%),
-                  radial-gradient(900px 700px at 90% 0%, rgba(45,225,194,.14), transparent 55%),
-                  var(--bg);
+      background:
+        radial-gradient(1200px 800px at 20% -10%, rgba(124,92,255,.18), transparent 60%),
+        radial-gradient(900px 700px at 90% 0%, rgba(45,225,194,.14), transparent 55%),
+        var(--bg);
       color:var(--text);
-      letter-spacing:.2px;
     }
 
     .wrap{
       max-width: 1080px;
       margin: 0 auto;
-      padding: 18px 16px 48px;
+      padding: 18px 16px 56px;
     }
 
-    /* Top bar */
-    .topbar{
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      backdrop-filter: blur(10px);
-      background: linear-gradient(to bottom, rgba(11,15,20,.85), rgba(11,15,20,.65));
-      border-bottom: 1px solid var(--border);
-      padding: 14px 16px;
-      margin: 0 -16px 18px;
+    /* Top header block like the screenshot */
+    .hero{
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      background: linear-gradient(180deg, rgba(20,16,40,.92), rgba(14,12,28,.92));
+      border: 1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow);
     }
     @media (prefers-color-scheme: light){
-      .topbar{ background: linear-gradient(to bottom, rgba(246,247,251,.92), rgba(246,247,251,.7)); }
+      .hero{
+        background: linear-gradient(180deg, rgba(124,92,255,.14), rgba(45,225,194,.10));
+        border: 1px solid var(--border);
+      }
     }
 
-    .row{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      flex-wrap:wrap;
-      justify-content:space-between;
+    .heroTitle{
+      margin:0;
+      font-size: 18px;
+      font-weight: 850;
+      letter-spacing: .2px;
     }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width: 240px;
-    }
-    .logo{
-      width: 34px; height: 34px;
-      border-radius: 10px;
-      background:
-        radial-gradient(12px 12px at 30% 35%, rgba(255,255,255,.85), transparent 55%),
-        linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow: 0 10px 25px rgba(124,92,255,.25);
-    }
-    .titleWrap{display:flex; flex-direction:column; line-height:1.1}
-    .title{
-      font-size: 16px;
-      font-weight: 800;
-      letter-spacing: .3px;
-    }
-    .subtitle{
+    .heroSub{
+      margin-top: 6px;
       font-size: 12px;
-      color: var(--muted2);
-      margin-top: 3px;
+      color: rgba(255,255,255,.75);
+    }
+    @media (prefers-color-scheme: light){
+      .heroSub{ color: var(--muted); }
+    }
+
+    /* Controls panel */
+    .panel{
+      margin-top: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+    }
+    @media (prefers-color-scheme: light){
+      .panel{ background: rgba(17,24,39,.02); }
     }
 
     .controls{
@@ -112,83 +104,77 @@
       gap:10px;
       flex-wrap:wrap;
       align-items:center;
-      justify-content:flex-end;
-      flex: 1;
-      min-width: 280px;
     }
-
-    .seg{
-      display:flex;
-      background: rgba(255,255,255,.04);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 4px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
-    }
-    @media (prefers-color-scheme: light){
-      .seg{ background: rgba(17,24,39,.04); }
-    }
-    .seg button{
-      border:0;
-      background: transparent;
-      color: var(--muted);
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      cursor:pointer;
-      transition: .15s ease;
-    }
-    .seg button.active{
-      background: linear-gradient(135deg, rgba(124,92,255,.25), rgba(45,225,194,.14));
-      color: var(--text);
-      box-shadow: 0 8px 18px rgba(0,0,0,.15);
-    }
-    .seg button:hover{ color: var(--text); }
 
     .search{
+      flex: 1;
+      min-width: 240px;
       display:flex;
       align-items:center;
       gap:10px;
       padding: 10px 12px;
-      border-radius: 999px;
+      border-radius: 12px;
       border: 1px solid var(--border);
       background: rgba(255,255,255,.04);
-      min-width: 260px;
-      flex: 1;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
     }
     @media (prefers-color-scheme: light){
       .search{ background: rgba(17,24,39,.03); }
     }
     .search input{
+      width:100%;
       border:0;
       outline:0;
-      width:100%;
       background: transparent;
       color: var(--text);
       font-size: 13px;
     }
-    .search .hint{
-      color: var(--muted2);
-      font-size: 11px;
-      white-space:nowrap;
+
+    select{
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 3px 6px;
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      min-width: 190px;
+      outline: none;
     }
+    @media (prefers-color-scheme: light){
+      select{ background: rgba(17,24,39,.03); }
+    }
+
+    .toggles{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-left:auto;
+    }
+
+    .toggle{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      color: var(--muted);
+      font-size: 12px;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .toggle input{ transform: translateY(1px); }
 
     .btn{
       border: 1px solid var(--border);
       background: rgba(255,255,255,.04);
       color: var(--text);
       padding: 10px 12px;
-      border-radius: 999px;
+      border-radius: 12px;
       font-size: 12px;
       cursor:pointer;
       transition: .15s ease;
       display:flex;
       align-items:center;
       gap:8px;
+      white-space:nowrap;
     }
     @media (prefers-color-scheme: light){
       .btn{ background: rgba(17,24,39,.03); }
@@ -196,11 +182,21 @@
     .btn:hover{ transform: translateY(-1px); box-shadow: var(--shadow); }
     .btn:active{ transform: translateY(0); }
 
+    .metaRow{
+      margin-top: 10px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .metaRow strong{ color: var(--text); font-weight: 750; }
     .pill{
       display:inline-flex;
       align-items:center;
       gap:8px;
-      padding: 8px 10px;
+      padding: 7px 10px;
       border-radius: 999px;
       font-size: 12px;
       color: var(--muted);
@@ -209,40 +205,20 @@
       white-space:nowrap;
     }
 
-    /* Content */
-    .meta{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-      margin: 10px 0 18px;
+    /* List */
+    .state{
+      margin-top: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius);
+      padding: 18px;
       color: var(--muted);
-      font-size: 12px;
-    }
-    .meta strong{ color: var(--text); font-weight: 700; }
-    .meta .right{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
-
-    .day{
-      margin-top: 18px;
-      margin-bottom: 8px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .day h2{
-      margin:0;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      color: var(--muted2);
-    }
-    .day .line{
-      height:1px;
-      flex:1;
-      background: var(--border);
+      font-size: 13px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
     }
 
     .list{
+      margin-top: 14px;
       display:flex;
       flex-direction:column;
       gap:10px;
@@ -252,19 +228,20 @@
       background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 14px 14px;
+      padding: 14px;
       box-shadow: 0 1px 0 rgba(255,255,255,.06);
       transition: .15s ease;
     }
     @media (prefers-color-scheme: light){
-      .card{
-        background: linear-gradient(180deg, rgba(255,255,255,1), rgba(251,252,255,1));
-      }
+      .card{ background: linear-gradient(180deg, rgba(255,255,255,1), rgba(251,252,255,1)); }
     }
     .card:hover{
       transform: translateY(-1px);
       box-shadow: var(--shadow);
       border-color: rgba(124,92,255,.35);
+    }
+    .card.read{
+      opacity: .72;
     }
 
     .cardTop{
@@ -273,11 +250,12 @@
       gap:12px;
       align-items:flex-start;
     }
+
     .headline{
       margin:0;
       font-size: 14px;
       line-height: 1.35;
-      font-weight: 700;
+      font-weight: 760;
     }
     .headline a{
       color: var(--text);
@@ -285,18 +263,26 @@
     }
     .headline a:hover{ text-decoration:underline; }
 
-    .score{
-      min-width: 84px;
-      text-align:right;
-      color: var(--muted2);
-      font-size: 11px;
+    .actions{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex-shrink:0;
     }
-    .score .num{
+    .mini{
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.03);
       color: var(--text);
-      font-weight: 800;
+      padding: 6px 10px;
+      border-radius: 10px;
       font-size: 12px;
-      letter-spacing: .3px;
+      cursor:pointer;
+      transition:.12s ease;
     }
+    .mini:hover{ transform: translateY(-1px); box-shadow: var(--shadow); }
+    .mini:active{ transform: translateY(0); }
+    .mini.starred{ border-color: rgba(45,225,194,.35); }
+    .mini.read{ border-color: rgba(124,92,255,.35); }
 
     .sub{
       margin-top: 8px;
@@ -319,27 +305,22 @@
       color: var(--text);
       font-size: 11px;
     }
-    .muted{ color: var(--muted2); }
 
-    .why{
-      margin-top: 8px;
+    .pillSmall{
+      display:inline-flex;
+      align-items:center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 11px;
       color: var(--muted);
-      font-size: 12px;
-      line-height: 1.35;
-    }
-
-    .state{
       border: 1px solid var(--border);
       background: rgba(255,255,255,.03);
-      border-radius: var(--radius);
-      padding: 18px;
-      color: var(--muted);
-      font-size: 13px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
     }
 
+    .muted{ color: var(--muted2); }
+
     .footer{
-      margin-top: 26px;
+      margin-top: 22px;
       color: var(--muted2);
       font-size: 12px;
       display:flex;
@@ -347,101 +328,97 @@
       gap:12px;
       flex-wrap:wrap;
     }
-
-    .kbd{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size: 11px;
-      border: 1px solid var(--border);
-      border-bottom-color: rgba(255,255,255,.18);
-      padding: 2px 6px;
-      border-radius: 6px;
-      color: var(--muted);
-      background: rgba(255,255,255,.03);
-    }
+    code{ color: var(--muted); }
   </style>
 </head>
 <body>
-  <div class="topbar">
-    <div class="wrap">
-      <div class="row">
-        <div class="brand">
-          <div class="logo"></div>
-          <div class="titleWrap">
-            <div class="title">FinanceRadar</div>
-            <div class="subtitle">Ranked links from your feeds</div>
-          </div>
+  <div class="wrap">
+
+    <div class="hero">
+      <h1 class="heroTitle">Indian Finance Radar</h1>
+      <div class="heroSub" id="heroSub">Loading…</div>
+    </div>
+
+    <div class="panel">
+      <div class="controls">
+        <div class="search">
+          <input id="q" placeholder="Search news…" autocomplete="off" />
         </div>
 
-        <div class="controls">
-          <div class="seg" id="daysSeg">
-            <button data-days="1">1D</button>
-            <button data-days="2">2D</button>
-            <button data-days="5" class="active">5D</button>
-          </div>
+        <select id="sourceSel" title="Filter by source">
+          <option value="">All Sources</option>
+        </select>
 
-          <div class="search">
-            <input id="q" placeholder="Search titles, sources, tags…" autocomplete="off" />
-            <span class="hint"><span class="kbd">/</span></span>
-          </div>
+        <select id="topicSel" title="Filter by topic">
+          <option value="">All Topics</option>
+        </select>
 
-          <button class="btn" id="refreshBtn" title="Refresh (R)">
-            ⟳ Refresh
-          </button>
+        <div class="toggles">
+          <label class="toggle"><input type="checkbox" id="hideRead"> Hide read</label>
+          <label class="toggle"><input type="checkbox" id="starOnly"> Starred only</label>
+          <button class="btn" id="refreshBtn" title="Refresh">⟳ Refresh</button>
         </div>
       </div>
 
-      <div class="meta">
-        <div id="metaLeft">Loading…</div>
-        <div class="right">
-          <span class="pill" id="metaSpeed">—</span>
-          <span class="pill" id="metaStats">—</span>
+      <div class="metaRow">
+        <div id="metaLeft">—</div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+          <span class="pill" id="metaRightA">—</span>
+          <span class="pill" id="metaRightB">—</span>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="wrap">
-    <div id="content" class="state">Fetching ranked candidates…</div>
+    <div id="content" class="state">Fetching items…</div>
 
     <div class="footer">
-      <div>
-        Tips: press <span class="kbd">/</span> to search, <span class="kbd">R</span> to refresh, <span class="kbd">Esc</span> to clear search.
-      </div>
-      <div class="muted">
-        Uses <code>/api/candidates</code> as the single source of truth.
-      </div>
+      <div>Tip: press <code>/</code> to search · <code>Esc</code> clears · Read/Star is saved on this device.</div>
+      <div class="muted">Uses <code>/api/candidates</code> output (<code>{ items: [] }</code>).</div>
     </div>
+
   </div>
 
   <script>
-    // CONFIG: point this at your candidates endpoint.
-    // If your dashboard is hosted separately, keep it absolute.
+    // ====== CONFIG ======
+    // Point this to your candidates endpoint. Use absolute if your UI is on a different domain.
     const API_BASE = "https://financeradar.pages.dev/api/candidates";
 
+    // ====== Local state ======
     let state = {
-      days: 5,
       q: "",
+      source: "",
+      topic: "",
+      hideRead: false,
+      starOnly: false,
       data: null,
       fetchedAt: null
     };
 
+    // Read/star persistence (local only)
+    const STORE_KEY = "ifr_state_v1";
+    const store = loadStore(); // { read: {id:true}, star: {id:true} }
+
     const el = (id) => document.getElementById(id);
 
-    function formatDay(dayStr){
-      // dayStr = YYYY-MM-DD
+    function loadStore(){
       try{
-        const d = new Date(dayStr + "T00:00:00");
-        return d.toLocaleDateString(undefined, { weekday:"short", month:"short", day:"numeric" });
-      }catch{ return dayStr; }
+        const raw = localStorage.getItem(STORE_KEY);
+        if(!raw) return { read:{}, star:{} };
+        const obj = JSON.parse(raw);
+        return {
+          read: obj.read && typeof obj.read === "object" ? obj.read : {},
+          star: obj.star && typeof obj.star === "object" ? obj.star : {}
+        };
+      }catch{
+        return { read:{}, star:{} };
+      }
     }
-
-    function hostFromUrl(url){
-      try { return new URL(url).hostname.replace(/^www\./,""); }
-      catch { return ""; }
+    function saveStore(){
+      localStorage.setItem(STORE_KEY, JSON.stringify(store));
     }
 
     function escapeHtml(str){
-      return String(str)
+      return String(str ?? "")
         .replaceAll("&","&amp;")
         .replaceAll("<","&lt;")
         .replaceAll(">","&gt;")
@@ -449,155 +426,224 @@
         .replaceAll("'","&#039;");
     }
 
-    function setDays(days){
-      state.days = days;
-      document.querySelectorAll("#daysSeg button").forEach(b=>{
-        b.classList.toggle("active", Number(b.dataset.days) === days);
+    function hostFromUrl(url){
+      try { return new URL(url).hostname.replace(/^www\./,""); }
+      catch { return ""; }
+    }
+
+    function fmtTime(d){
+      try{
+        return d.toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" });
+      }catch{ return "—"; }
+    }
+
+    function fmtDate(iso){
+      if(!iso) return "";
+      try{
+        const d = new Date(iso);
+        return d.toLocaleDateString(undefined, { month:"short", day:"numeric" });
+      }catch{ return ""; }
+    }
+
+    function uniqSorted(arr){
+      return Array.from(new Set(arr)).sort((a,b)=> a.localeCompare(b));
+    }
+
+    function buildFilters(items){
+      const sources = uniqSorted(items.map(it => it.feed?.title).filter(Boolean));
+      const topics  = uniqSorted(items.flatMap(it => Array.isArray(it.tags) ? it.tags : []).filter(Boolean));
+
+      const sourceSel = el("sourceSel");
+      const topicSel = el("topicSel");
+
+      // preserve current selection
+      const prevSource = state.source;
+      const prevTopic = state.topic;
+
+      sourceSel.innerHTML = `<option value="">All Sources</option>` +
+        sources.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join("");
+
+      topicSel.innerHTML = `<option value="">All Topics</option>` +
+        topics.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join("");
+
+      if(prevSource) sourceSel.value = prevSource;
+      if(prevTopic) topicSel.value = prevTopic;
+    }
+
+    function applyFilters(items){
+      const q = state.q.trim().toLowerCase();
+      const src = state.source;
+      const topic = state.topic;
+      const hideRead = state.hideRead;
+      const starOnly = state.starOnly;
+
+      return items.filter(it => {
+        if(src && (it.feed?.title || "") !== src) return false;
+        if(topic && !(Array.isArray(it.tags) && it.tags.includes(topic))) return false;
+
+        const id = String(it.id ?? "");
+        const isRead = !!store.read[id];
+        const isStar = !!store.star[id];
+
+        if(hideRead && isRead) return false;
+        if(starOnly && !isStar) return false;
+
+        if(!q) return true;
+
+        const hay = [
+          it.title || "",
+          it.feed?.title || "",
+          hostFromUrl(it.url || ""),
+          Array.isArray(it.tags) ? it.tags.join(" ") : ""
+        ].join(" ").toLowerCase();
+
+        return hay.includes(q);
       });
-      fetchAndRender();
-    }
-
-    function setQuery(q){
-      state.q = q.trim().toLowerCase();
-      render();
-    }
-
-    function applyFilter(groups){
-      if(!state.q) return groups;
-
-      const q = state.q;
-      const out = [];
-      for(const g of groups){
-        const items = g.items.filter(it=>{
-          const title = (it.title || "").toLowerCase();
-          const feed = (it.feed?.title || "").toLowerCase();
-          const tags = (it.tags || []).join(" ").toLowerCase();
-          const why = (it.why || "").toLowerCase();
-          const domain = hostFromUrl(it.url).toLowerCase();
-          return title.includes(q) || feed.includes(q) || tags.includes(q) || why.includes(q) || domain.includes(q);
-        });
-        if(items.length) out.push({ day: g.day, items });
-      }
-      return out;
     }
 
     function render(){
       const content = el("content");
       if(!state.data){
         content.className = "state";
-        content.textContent = "Fetching ranked candidates…";
+        content.textContent = "Fetching items…";
         return;
       }
 
-      const meta = state.data.meta || {};
-      const groupsRaw = state.data.groups || [];
-      const groups = applyFilter(groupsRaw);
+      const allItems = Array.isArray(state.data.items) ? state.data.items : [];
+      const filtered = applyFilters(allItems);
 
-      // meta bar
-      const fetchedLabel = state.fetchedAt
-        ? state.fetchedAt.toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" })
-        : "—";
+      // Header meta
+      const sourcesCount = new Set(allItems.map(it => it.feed?.title).filter(Boolean)).size;
+      const lastUpdated = state.fetchedAt ? fmtTime(state.fetchedAt) : "—";
+
+      el("heroSub").textContent =
+        `${allItems.length} news articles from ${sourcesCount} sources · Last updated: ${lastUpdated}`;
+
       el("metaLeft").innerHTML =
-        `Showing <strong>${(state.data.top || []).length}</strong> ranked items over <strong>${state.days} days</strong> · Updated <strong>${fetchedLabel}</strong>`;
+        `Showing <strong>${filtered.length}</strong> of <strong>${allItems.length}</strong>`;
 
-      const t = meta.timing || {};
-      const ms = typeof t.total_ms === "number" ? t.total_ms : null;
-      el("metaSpeed").textContent = ms !== null ? `API ${ms} ms` : "API —";
+      el("metaRightA").textContent =
+        state.source ? `Source: ${state.source}` : "Source: All";
+      el("metaRightB").textContent =
+        state.topic ? `Topic: ${state.topic}` : "Topic: All";
 
-      el("metaStats").textContent =
-        `Fetched ${meta.raw_fetched ?? "—"} · Pages ${meta.pages_fetched ?? "—"} · Clusters ${meta.clusters ?? "—"}`;
-
-      if(!groups.length){
+      if(filtered.length === 0){
         content.className = "state";
-        content.textContent = state.q
-          ? "No results match your search."
-          : "No items returned. Try increasing days.";
+        content.textContent = "No results match your filters.";
         return;
       }
 
-      // build UI
       const parts = [];
-      for(const g of groups){
-        parts.push(`
-          <div class="day">
-            <h2>${escapeHtml(formatDay(g.day))}</h2>
-            <div class="line"></div>
-          </div>
-          <div class="list">
-            ${g.items.map(renderItem).join("")}
-          </div>
-        `);
+      parts.push(`<div class="list">`);
+      for(const it of filtered){
+        parts.push(renderItem(it));
       }
+      parts.push(`</div>`);
 
       content.className = "";
       content.innerHTML = parts.join("");
+      wireCardButtons();
     }
 
     function renderItem(it){
+      const id = String(it.id ?? "");
       const title = escapeHtml(it.title || "");
       const url = it.url || "#";
       const feedTitle = escapeHtml(it.feed?.title || hostFromUrl(url) || "Source");
       const domain = escapeHtml(hostFromUrl(url));
-      const why = escapeHtml(it.why || "");
-      const score = typeof it.score === "number" ? it.score.toFixed(2) : "";
-      const age = typeof it.age_hours === "number" ? `${it.age_hours}h` : "";
+      const when = fmtDate(it.published_at);
 
       const tags = Array.isArray(it.tags) ? it.tags.slice(0, 3) : [];
-      const tagChips = tags.map(t=>`<span class="chip">#${escapeHtml(t)}</span>`).join("");
+      const tagChips = tags.map(t => `<span class="chip">#${escapeHtml(t)}</span>`).join("");
 
-      const mentions = it.mentions ?? 1;
-      const sources = it.sources_count ?? 1;
+      const isRead = !!store.read[id];
+      const isStar = !!store.star[id];
 
       return `
-        <div class="card">
+        <div class="card ${isRead ? "read" : ""}" data-id="${escapeHtml(id)}">
           <div class="cardTop">
             <h3 class="headline">
               <a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${title}</a>
             </h3>
-            <div class="score">
-              <div class="num">${score}</div>
-              <div class="muted">${age}</div>
+            <div class="actions">
+              <button class="mini ${isStar ? "starred" : ""}" data-action="star">${isStar ? "Starred" : "Star"}</button>
+              <button class="mini ${isRead ? "read" : ""}" data-action="read">${isRead ? "Read" : "Mark read"}</button>
             </div>
           </div>
 
           <div class="sub">
             <span class="chip">📰 ${feedTitle}</span>
-            ${domain ? `<span class="pill">${domain}</span>` : ""}
-            <span class="pill">mentions ${mentions}</span>
-            <span class="pill">sources ${sources}</span>
+            ${domain ? `<span class="pillSmall">${domain}</span>` : ""}
+            ${when ? `<span class="pillSmall">${escapeHtml(when)}</span>` : ""}
             ${tagChips}
           </div>
-
-          ${why ? `<div class="why">${why}</div>` : ""}
         </div>
       `;
     }
 
+    function wireCardButtons(){
+      document.querySelectorAll(".card .mini").forEach(btn=>{
+        btn.addEventListener("click", (e)=>{
+          e.preventDefault();
+          e.stopPropagation();
+
+          const action = btn.dataset.action;
+          const card = btn.closest(".card");
+          const id = card?.dataset?.id;
+          if(!id) return;
+
+          if(action === "read"){
+            store.read[id] = !store.read[id];
+          }else if(action === "star"){
+            store.star[id] = !store.star[id];
+          }
+
+          saveStore();
+          render(); // simplest: rerender
+        });
+      });
+
+      // Mark read when user clicks the headline (optional but useful)
+      document.querySelectorAll(".card .headline a").forEach(a=>{
+        a.addEventListener("click", ()=>{
+          const card = a.closest(".card");
+          const id = card?.dataset?.id;
+          if(!id) return;
+          store.read[id] = true;
+          saveStore();
+          // no render here; let navigation happen
+        });
+      });
+    }
+
     async function fetchCandidates(){
-      // Keep URL stable to maximize caching
+      // NOTE: Your API now hard-codes 5 days. No need to pass days param.
       const url = new URL(API_BASE);
-      url.searchParams.set("days", String(state.days));
-      // You set default top in API; optionally force top=100 from UI by uncommenting:
-      // url.searchParams.set("top", "100");
+      // optionally control list size:
+      // url.searchParams.set("top","150");
 
       const resp = await fetch(url.toString(), { cache: "no-store" });
       const data = await resp.json();
+
       if(!resp.ok){
         const msg = data?.error ? `${data.error}` : `HTTP ${resp.status}`;
         throw new Error(msg);
       }
-      return data;
+      return data; // expects { items: [...] }
     }
 
     async function fetchAndRender(){
       const content = el("content");
       content.className = "state";
-      content.textContent = "Fetching ranked candidates…";
+      content.textContent = "Fetching items…";
 
       try{
         const data = await fetchCandidates();
         state.data = data;
         state.fetchedAt = new Date();
+
+        const items = Array.isArray(data.items) ? data.items : [];
+        buildFilters(items);
         render();
       }catch(err){
         state.data = null;
@@ -606,12 +652,13 @@
       }
     }
 
-    // Events
-    document.querySelectorAll("#daysSeg button").forEach(btn=>{
-      btn.addEventListener("click", () => setDays(Number(btn.dataset.days)));
-    });
+    // ====== Events ======
+    el("q").addEventListener("input", (e)=> { state.q = e.target.value; render(); });
+    el("sourceSel").addEventListener("change", (e)=> { state.source = e.target.value; render(); });
+    el("topicSel").addEventListener("change", (e)=> { state.topic = e.target.value; render(); });
 
-    el("q").addEventListener("input", (e)=> setQuery(e.target.value));
+    el("hideRead").addEventListener("change", (e)=> { state.hideRead = e.target.checked; render(); });
+    el("starOnly").addEventListener("change", (e)=> { state.starOnly = e.target.checked; render(); });
 
     el("refreshBtn").addEventListener("click", fetchAndRender);
 
@@ -621,17 +668,15 @@
         e.preventDefault();
         el("q").focus();
       }
-      if((e.key === "r" || e.key === "R") && document.activeElement !== el("q")){
-        fetchAndRender();
-      }
       if(e.key === "Escape"){
         el("q").value = "";
-        setQuery("");
+        state.q = "";
+        render();
         el("q").blur();
       }
     });
 
-    // Initial load
+    // Initial
     fetchAndRender();
   </script>
 </body>
