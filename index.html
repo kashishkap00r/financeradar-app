@@ -6,63 +6,26 @@
   <title>Indian Finance Radar</title>
 
   <style>
-    /* ============================================================
-      THEME SYSTEM
-      - Default: LIGHT (data-theme="light" on <html>)
-      - Toggle: sets data-theme="dark"
-      - All colors use CSS variables so both themes stay consistent
-    ============================================================ */
     :root{
-      --bg: #f6f7fb;
-      --bgGlow1: rgba(124,92,255,.14);
-      --bgGlow2: rgba(45,225,194,.10);
-
-      --panel: #ffffff;
-      --panelSoft: rgba(17,24,39,.02);
-      --panelInput: rgba(17,24,39,.03);
-
-      --text: #111827;
-      --muted: #4b5563;
-      --muted2: #6b7280;
-
-      --border: rgba(17,24,39,.10);
-      --shadow: 0 10px 30px rgba(17,24,39,.12);
-
-      --accent: #7c5cff;
-      --accentSoft: rgba(124,92,255,.12);
-
-      --chipBg: rgba(124,92,255,.10);
-      --chipBorder: rgba(124,92,255,.18);
-
-      --radius: 16px;
-      --radius2: 12px;
+      --bg:#f6f7fb; --bgGlow1:rgba(124,92,255,.14); --bgGlow2:rgba(45,225,194,.10);
+      --panel:#ffffff; --panelSoft:rgba(17,24,39,.02); --panelInput:rgba(17,24,39,.03);
+      --text:#111827; --muted:#4b5563; --muted2:#6b7280;
+      --border:rgba(17,24,39,.10); --shadow:0 10px 30px rgba(17,24,39,.12);
+      --accent:#7c5cff; --accentSoft:rgba(124,92,255,.12);
+      --chipBg:rgba(124,92,255,.10); --chipBorder:rgba(124,92,255,.18);
+      --radius:16px;
     }
-
     html[data-theme="dark"]{
-      --bg: #0b0f14;
-      --bgGlow1: rgba(124,92,255,.18);
-      --bgGlow2: rgba(45,225,194,.14);
-
-      --panel: #0f1620;
-      --panelSoft: rgba(255,255,255,.03);
-      --panelInput: rgba(255,255,255,.04);
-
-      --text: #e9eef7;
-      --muted: #9fb0c8;
-      --muted2: #6f819a;
-
-      --border: rgba(255,255,255,.08);
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-
-      --accent: #7c5cff;
-      --accentSoft: rgba(124,92,255,.15);
-
-      --chipBg: rgba(124,92,255,.15);
-      --chipBorder: rgba(124,92,255,.25);
+      --bg:#0b0f14; --bgGlow1:rgba(124,92,255,.18); --bgGlow2:rgba(45,225,194,.14);
+      --panel:#0f1620; --panelSoft:rgba(255,255,255,.03); --panelInput:rgba(255,255,255,.04);
+      --text:#e9eef7; --muted:#9fb0c8; --muted2:#6f819a;
+      --border:rgba(255,255,255,.08); --shadow:0 10px 30px rgba(0,0,0,.35);
+      --accent:#7c5cff; --accentSoft:rgba(124,92,255,.15);
+      --chipBg:rgba(124,92,255,.15); --chipBorder:rgba(124,92,255,.25);
     }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
@@ -70,329 +33,136 @@
         radial-gradient(1200px 800px at 20% -10%, var(--bgGlow1), transparent 60%),
         radial-gradient(900px 700px at 90% 0%, var(--bgGlow2), transparent 55%),
         var(--bg);
-      color: var(--text);
+      color:var(--text);
     }
+    .wrap{max-width:1080px;margin:0 auto;padding:18px 16px 56px}
 
-    .wrap{
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 18px 16px 56px;
-    }
-
-    /* Header block */
     .hero{
-      border-radius: var(--radius);
-      padding: 18px 20px;
-      background: linear-gradient(180deg, var(--accentSoft), var(--panelSoft));
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      align-items:flex-start;
+      border-radius:var(--radius);
+      padding:18px 20px;
+      background:linear-gradient(180deg,var(--accentSoft),var(--panelSoft));
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      display:flex;justify-content:space-between;gap:12px;align-items:flex-start;
     }
-    .heroLeft{ min-width: 240px; }
-    .heroTitle{
-      margin:0;
-      font-size: 18px;
-      font-weight: 850;
-      letter-spacing: .2px;
-    }
-    .heroSub{
-      margin-top: 6px;
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .heroRight{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
+    .heroTitle{margin:0;font-size:18px;font-weight:850;letter-spacing:.2px}
+    .heroSub{margin-top:6px;font-size:12px;color:var(--muted)}
+    .heroRight{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
 
     .btn{
-      border: 1px solid var(--border);
-      background: var(--panelInput);
-      color: var(--text);
-      padding: 10px 12px;
-      border-radius: 12px;
-      font-size: 12px;
+      border:1px solid var(--border);
+      background:var(--panelInput);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      font-size:12px;
       cursor:pointer;
-      transition: .15s ease;
-      display:flex;
-      align-items:center;
-      gap:8px;
-      white-space:nowrap;
-      user-select:none;
+      transition:.15s ease;
+      display:flex;align-items:center;gap:8px;white-space:nowrap;user-select:none;
     }
-    .btn:hover{ transform: translateY(-1px); box-shadow: var(--shadow); }
-    .btn:active{ transform: translateY(0); }
+    .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+    .btn:active{transform:translateY(0)}
 
-    /* Controls panel */
     .panel{
-      margin-top: 14px;
-      border: 1px solid var(--border);
-      background: var(--panelSoft);
-      border-radius: var(--radius);
-      padding: 14px;
+      margin-top:14px;
+      border:1px solid var(--border);
+      background:var(--panelSoft);
+      border-radius:var(--radius);
+      padding:14px;
       box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
     }
-
-    .controls{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-
+    .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
     .search{
-      flex: 1;
-      min-width: 240px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: var(--panelInput);
+      flex:1;min-width:240px;
+      display:flex;align-items:center;gap:10px;
+      padding:10px 12px;border-radius:12px;border:1px solid var(--border);
+      background:var(--panelInput);
     }
-    .search input{
-      width:100%;
-      border:0;
-      outline:0;
-      background: transparent;
-      color: var(--text);
-      font-size: 13px;
-    }
-
+    .search input{width:100%;border:0;outline:0;background:transparent;color:var(--text);font-size:13px}
     select{
-      border: 1px solid var(--border);
-      background: var(--panelInput);
-      color: var(--text);
-      padding: 10px 12px;
-      border-radius: 12px;
-      font-size: 13px;
-      min-width: 190px;
-      outline: none;
+      border:1px solid var(--border);
+      background:var(--panelInput);
+      color:var(--text);
+      padding:10px 12px;border-radius:12px;font-size:13px;min-width:190px;outline:none;
     }
-
-    .toggles{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      flex-wrap:wrap;
-      margin-left:auto;
-    }
-
-    .toggle{
-      display:flex;
-      gap:8px;
-      align-items:center;
-      color: var(--muted);
-      font-size: 12px;
-      user-select:none;
-      white-space:nowrap;
-    }
-    .toggle input{ transform: translateY(1px); }
+    .toggles{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-left:auto}
+    .toggle{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:12px;user-select:none;white-space:nowrap}
+    .toggle input{transform:translateY(1px)}
 
     .metaRow{
-      margin-top: 10px;
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-      color: var(--muted);
-      font-size: 12px;
+      margin-top:10px;
+      display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+      color:var(--muted);font-size:12px;
     }
-    .metaRow strong{ color: var(--text); font-weight: 750; }
-
+    .metaRow strong{color:var(--text);font-weight:750}
     .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      color: var(--muted);
-      border: 1px solid var(--border);
-      background: var(--panelInput);
-      white-space:nowrap;
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 10px;border-radius:999px;font-size:12px;color:var(--muted);
+      border:1px solid var(--border);background:var(--panelInput);white-space:nowrap;
     }
 
-    /* Pagination */
-    .pager{
-      margin-top: 10px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .pageBtns{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
+    .pager{margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .pageBtns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
     .pageBtn{
-      border: 1px solid var(--border);
-      background: var(--panelInput);
-      color: var(--text);
-      padding: 8px 10px;
-      border-radius: 10px;
-      font-size: 12px;
-      cursor:pointer;
-      transition:.12s ease;
-      min-width: 38px;
-      text-align:center;
-      user-select:none;
+      border:1px solid var(--border);
+      background:var(--panelInput);
+      color:var(--text);
+      padding:8px 10px;border-radius:10px;font-size:12px;cursor:pointer;
+      transition:.12s ease;min-width:38px;text-align:center;user-select:none;
     }
-    .pageBtn:hover{ transform: translateY(-1px); box-shadow: var(--shadow); }
-    .pageBtn:active{ transform: translateY(0); }
-    .pageBtn.active{
-      border-color: rgba(124,92,255,.45);
-      box-shadow: 0 0 0 3px rgba(124,92,255,.12);
-      font-weight: 800;
-    }
-    .pageBtn:disabled{
-      opacity:.45;
-      cursor:not-allowed;
-      transform:none;
-      box-shadow:none;
-    }
+    .pageBtn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+    .pageBtn:active{transform:translateY(0)}
+    .pageBtn.active{border-color:rgba(124,92,255,.45);box-shadow:0 0 0 3px rgba(124,92,255,.12);font-weight:800}
+    .pageBtn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
 
-    /* List / cards */
     .state{
-      margin-top: 14px;
-      border: 1px solid var(--border);
-      background: var(--panelSoft);
-      border-radius: var(--radius);
-      padding: 18px;
-      color: var(--muted);
-      font-size: 13px;
+      margin-top:14px;border:1px solid var(--border);background:var(--panelSoft);
+      border-radius:var(--radius);padding:18px;color:var(--muted);font-size:13px;
       box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
     }
-
-    .list{
-      margin-top: 14px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-
+    .list{margin-top:14px;display:flex;flex-direction:column;gap:10px}
     .card{
-      background: linear-gradient(180deg, var(--panel), var(--panel));
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 14px;
-      box-shadow: 0 1px 0 rgba(255,255,255,.06);
-      transition: .15s ease;
+      background:linear-gradient(180deg,var(--panel),var(--panel));
+      border:1px solid var(--border);border-radius:var(--radius);
+      padding:14px;box-shadow:0 1px 0 rgba(255,255,255,.06);transition:.15s ease;
     }
-    .card:hover{
-      transform: translateY(-1px);
-      box-shadow: var(--shadow);
-      border-color: rgba(124,92,255,.35);
-    }
-    .card.read{ opacity:.72; }
-
-    .cardTop{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      align-items:flex-start;
-    }
-
-    .headline{
-      margin:0;
-      font-size: 14px;
-      line-height: 1.35;
-      font-weight: 760;
-    }
-    .headline a{
-      color: var(--text);
-      text-decoration:none;
-    }
-    .headline a:hover{ text-decoration:underline; }
-
-    .actions{
-      display:flex;
-      gap:8px;
-      align-items:center;
-      flex-shrink:0;
-    }
+    .card:hover{transform:translateY(-1px);box-shadow:var(--shadow);border-color:rgba(124,92,255,.35)}
+    .card.read{opacity:.72}
+    .cardTop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+    .headline{margin:0;font-size:14px;line-height:1.35;font-weight:760}
+    .headline a{color:var(--text);text-decoration:none}
+    .headline a:hover{text-decoration:underline}
+    .actions{display:flex;gap:8px;align-items:center;flex-shrink:0}
     .mini{
-      border: 1px solid var(--border);
-      background: var(--panelInput);
-      color: var(--text);
-      padding: 6px 10px;
-      border-radius: 10px;
-      font-size: 12px;
-      cursor:pointer;
-      transition:.12s ease;
+      border:1px solid var(--border);background:var(--panelInput);color:var(--text);
+      padding:6px 10px;border-radius:10px;font-size:12px;cursor:pointer;transition:.12s ease;
       user-select:none;
     }
-    .mini:hover{ transform: translateY(-1px); box-shadow: var(--shadow); }
-    .mini:active{ transform: translateY(0); }
-    .mini.starred{ border-color: rgba(45,225,194,.35); }
-    .mini.read{ border-color: rgba(124,92,255,.35); }
-
-    .sub{
-      margin-top: 8px;
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      align-items:center;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
+    .mini:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+    .mini:active{transform:translateY(0)}
+    .mini.starred{border-color:rgba(45,225,194,.35)}
+    .mini.read{border-color:rgba(124,92,255,.35)}
+    .sub{margin-top:8px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;color:var(--muted);font-size:12px}
     .chip{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: var(--chipBg);
-      border: 1px solid var(--chipBorder);
-      color: var(--text);
-      font-size: 11px;
+      display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;
+      background:var(--chipBg);border:1px solid var(--chipBorder);color:var(--text);font-size:11px;
     }
-
     .pillSmall{
-      display:inline-flex;
-      align-items:center;
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 11px;
-      color: var(--muted);
-      border: 1px solid var(--border);
-      background: var(--panelInput);
+      display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;font-size:11px;
+      color:var(--muted);border:1px solid var(--border);background:var(--panelInput);
     }
-
-    .footer{
-      margin-top: 22px;
-      color: var(--muted2);
-      font-size: 12px;
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-    code{ color: var(--muted); }
+    .footer{margin-top:22px;color:var(--muted2);font-size:12px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    code{color:var(--muted)}
   </style>
 </head>
 
 <body>
   <div class="wrap">
-
     <div class="hero">
-      <div class="heroLeft">
+      <div>
         <h1 class="heroTitle">Indian Finance Radar</h1>
         <div class="heroSub" id="heroSub">Loading…</div>
       </div>
-
       <div class="heroRight">
         <button class="btn" id="themeBtn" title="Toggle Day/Night">🌞 Day</button>
         <button class="btn" id="refreshBtn" title="Refresh">⟳ Refresh</button>
@@ -427,7 +197,6 @@
         </div>
       </div>
 
-      <!-- Pagination row -->
       <div class="pager">
         <div class="pill" id="pageMeta">Page — of —</div>
         <div class="pageBtns" id="pageBtns"></div>
@@ -440,49 +209,87 @@
       <div>Tip: press <code>/</code> to search · <code>Esc</code> clears · Read/Star saved on this device.</div>
       <div class="muted">Uses <code>/api/candidates?top=500</code> and paginates client-side.</div>
     </div>
-
   </div>
 
 <script>
-  /* ============================================================
-    CONFIG
-    - If your frontend + API are on the same domain:
-        const API_BASE = "/api/candidates";
-    - If different domain, put full URL.
-  ============================================================ */
+  // =========================
+  // CONFIG
+  // =========================
+  // If API is on same domain as this UI:
+  //   const API_BASE = "/api/candidates";
+  // If API is on another domain:
+  //   const API_BASE = "https://financeradar.kashishkapoor.com/api/candidates";
   const API_BASE = "/api/candidates";
 
-  // REQUIREMENTS:
-  // - Fetch 500 total
-  // - Show 50 per page (=> 10 pages)
   const FETCH_TOP = 500;
   const PAGE_SIZE = 50;
-  const MAX_VISIBLE_PAGES = 10; // when you have 500 items, this becomes 10 pages exactly
+  const MAX_VISIBLE_PAGES = 10;
 
-  /* ============================================================
-    LOCAL STATE
-  ============================================================ */
-  let state = {
-    q: "",
-    source: "",
-    topic: "",
-    hideRead: false,
-    starOnly: false,
-    data: null,
-    fetchedAt: null,
-    page: 1
-  };
-
-  // read/star persistence (local only)
-  const STORE_KEY = "ifr_state_v2";
-  const store = loadStore(); // { read: {id:true}, star: {id:true} }
-
-  // theme persistence
-  const THEME_KEY = "ifr_theme";
-  initTheme();
-
+  // =========================
+  // Helpers + DOM
+  // =========================
   const el = (id) => document.getElementById(id);
 
+  function escapeHtml(str){
+    return String(str ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+  function hostFromUrl(url){
+    try { return new URL(url).hostname.replace(/^www\./,""); }
+    catch { return ""; }
+  }
+  function fmtTime(d){
+    try{ return d.toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" }); }
+    catch{ return "—"; }
+  }
+  function fmtDate(iso){
+    if(!iso) return "";
+    try{
+      const d = new Date(iso);
+      return d.toLocaleDateString(undefined, { month:"short", day:"numeric" });
+    }catch{ return ""; }
+  }
+  function uniqSorted(arr){
+    return Array.from(new Set(arr)).sort((a,b)=> a.localeCompare(b));
+  }
+
+  // =========================
+  // Theme (light default)
+  // =========================
+  const THEME_KEY = "ifr_theme";
+  function updateThemeButton(theme){
+    const btn = el("themeBtn");
+    if(!btn) return;
+    if(theme === "dark"){
+      btn.textContent = "🌙 Night";
+      btn.title = "Switch to Day";
+    }else{
+      btn.textContent = "🌞 Day";
+      btn.title = "Switch to Night";
+    }
+  }
+  function initTheme(){
+    const saved = localStorage.getItem(THEME_KEY);
+    const theme = (saved === "dark" || saved === "light") ? saved : "light";
+    document.documentElement.setAttribute("data-theme", theme);
+    updateThemeButton(theme);
+  }
+  function toggleTheme(){
+    const cur = document.documentElement.getAttribute("data-theme") || "light";
+    const next = cur === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    localStorage.setItem(THEME_KEY, next);
+    updateThemeButton(next);
+  }
+
+  // =========================
+  // Read/Star store
+  // =========================
+  const STORE_KEY = "ifr_state_v2";
   function loadStore(){
     try{
       const raw = localStorage.getItem(STORE_KEY);
@@ -496,75 +303,29 @@
       return { read:{}, star:{} };
     }
   }
-  function saveStore(){
-    localStorage.setItem(STORE_KEY, JSON.stringify(store));
-  }
+  const store = loadStore();
+  function saveStore(){ localStorage.setItem(STORE_KEY, JSON.stringify(store)); }
 
-  function escapeHtml(str){
-    return String(str ?? "")
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
-  }
+  // =========================
+  // App state
+  // =========================
+  let state = {
+    q: "",
+    source: "",
+    topic: "",
+    hideRead: false,
+    starOnly: false,
+    data: null,
+    fetchedAt: null,
+    page: 1
+  };
 
-  function hostFromUrl(url){
-    try { return new URL(url).hostname.replace(/^www\./,""); }
-    catch { return ""; }
-  }
+  // Must run AFTER el() is defined
+  initTheme();
 
-  function fmtTime(d){
-    try{
-      return d.toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" });
-    }catch{ return "—"; }
-  }
-
-  function fmtDate(iso){
-    if(!iso) return "";
-    try{
-      const d = new Date(iso);
-      return d.toLocaleDateString(undefined, { month:"short", day:"numeric" });
-    }catch{ return ""; }
-  }
-
-  function uniqSorted(arr){
-    return Array.from(new Set(arr)).sort((a,b)=> a.localeCompare(b));
-  }
-
-  /* ============================================================
-    THEME (light default)
-  ============================================================ */
-  function initTheme(){
-    const saved = localStorage.getItem(THEME_KEY);
-    const theme = (saved === "dark" || saved === "light") ? saved : "light";
-    document.documentElement.setAttribute("data-theme", theme);
-    updateThemeButton(theme);
-  }
-
-  function toggleTheme(){
-    const cur = document.documentElement.getAttribute("data-theme") || "light";
-    const next = cur === "dark" ? "light" : "dark";
-    document.documentElement.setAttribute("data-theme", next);
-    localStorage.setItem(THEME_KEY, next);
-    updateThemeButton(next);
-  }
-
-  function updateThemeButton(theme){
-    const btn = el("themeBtn");
-    if(!btn) return;
-    if(theme === "dark"){
-      btn.textContent = "🌙 Night";
-      btn.title = "Switch to Day";
-    }else{
-      btn.textContent = "🌞 Day";
-      btn.title = "Switch to Night";
-    }
-  }
-
-  /* ============================================================
-    FILTERS + PAGINATION
-  ============================================================ */
+  // =========================
+  // Filters + Pagination
+  // =========================
   function buildFilters(items){
     const sources = uniqSorted(items.map(it => it.feed?.title).filter(Boolean));
     const topics  = uniqSorted(items.flatMap(it => Array.isArray(it.tags) ? it.tags : []).filter(Boolean));
@@ -622,31 +383,22 @@
   function getPaged(items){
     const totalPages = Math.max(1, Math.ceil(items.length / PAGE_SIZE));
     state.page = clampPage(state.page, totalPages);
-
     const start = (state.page - 1) * PAGE_SIZE;
-    const end = start + PAGE_SIZE;
-    return {
-      pageItems: items.slice(start, end),
-      totalPages
-    };
+    return { pageItems: items.slice(start, start + PAGE_SIZE), totalPages };
   }
 
   function renderPagination(totalPages){
+    el("pageMeta").textContent = `Page ${state.page} of ${totalPages}`;
     const box = el("pageBtns");
-    const meta = el("pageMeta");
-    meta.textContent = `Page ${state.page} of ${totalPages}`;
 
-    // If total pages is larger than MAX_VISIBLE_PAGES, show first N (practical + simple)
     const visiblePages = Math.min(totalPages, MAX_VISIBLE_PAGES);
-
     const parts = [];
-    parts.push(`<button class="pageBtn" data-page="prev" ${state.page === 1 ? "disabled" : ""}>Prev</button>`);
 
+    parts.push(`<button class="pageBtn" data-page="prev" ${state.page===1?"disabled":""}>Prev</button>`);
     for(let p=1; p<=visiblePages; p++){
-      parts.push(`<button class="pageBtn ${p===state.page ? "active" : ""}" data-page="${p}">${p}</button>`);
+      parts.push(`<button class="pageBtn ${p===state.page?"active":""}" data-page="${p}">${p}</button>`);
     }
-
-    parts.push(`<button class="pageBtn" data-page="next" ${state.page === totalPages ? "disabled" : ""}>Next</button>`);
+    parts.push(`<button class="pageBtn" data-page="next" ${state.page===totalPages?"disabled":""}>Next</button>`);
 
     box.innerHTML = parts.join("");
 
@@ -662,9 +414,9 @@
     });
   }
 
-  /* ============================================================
-    RENDER
-  ============================================================ */
+  // =========================
+  // Render
+  // =========================
   function render(){
     const content = el("content");
     if(!state.data){
@@ -685,25 +437,22 @@
     el("metaLeft").innerHTML =
       `Showing <strong>${filtered.length}</strong> of <strong>${allItems.length}</strong>`;
 
-    el("metaRightA").textContent =
-      state.source ? `Source: ${state.source}` : "Source: All";
-    el("metaRightB").textContent =
-      state.topic ? `Topic: ${state.topic}` : "Topic: All";
-
-    const { pageItems, totalPages } = getPaged(filtered);
-    renderPagination(totalPages);
+    el("metaRightA").textContent = state.source ? `Source: ${state.source}` : "Source: All";
+    el("metaRightB").textContent = state.topic ? `Topic: ${state.topic}` : "Topic: All";
 
     if(filtered.length === 0){
+      renderPagination(1);
       content.className = "state";
       content.textContent = "No results match your filters.";
       return;
     }
 
+    const { pageItems, totalPages } = getPaged(filtered);
+    renderPagination(totalPages);
+
     const parts = [];
     parts.push(`<div class="list">`);
-    for(const it of pageItems){
-      parts.push(renderItem(it));
-    }
+    for(const it of pageItems) parts.push(renderItem(it));
     parts.push(`</div>`);
 
     content.className = "";
@@ -750,26 +499,20 @@
   function wireCardButtons(){
     document.querySelectorAll(".card .mini").forEach(btn=>{
       btn.addEventListener("click", (e)=>{
-        e.preventDefault();
-        e.stopPropagation();
-
+        e.preventDefault(); e.stopPropagation();
         const action = btn.dataset.action;
         const card = btn.closest(".card");
         const id = card?.dataset?.id;
         if(!id) return;
 
-        if(action === "read"){
-          store.read[id] = !store.read[id];
-        }else if(action === "star"){
-          store.star[id] = !store.star[id];
-        }
+        if(action === "read") store.read[id] = !store.read[id];
+        if(action === "star") store.star[id] = !store.star[id];
 
         saveStore();
         render();
       });
     });
 
-    // Mark read when user clicks the headline
     document.querySelectorAll(".card .headline a").forEach(a=>{
       a.addEventListener("click", ()=>{
         const card = a.closest(".card");
@@ -781,21 +524,35 @@
     });
   }
 
-  /* ============================================================
-    FETCH
-  ============================================================ */
-  async function fetchCandidates(){
-    const url = new URL(API_BASE, window.location.origin);
-    url.searchParams.set("top", String(FETCH_TOP)); // <-- 500 items
+  // =========================
+  // Fetch
+  // =========================
+  function buildApiUrl(){
+    // If API_BASE is absolute (starts with http), use it directly.
+    // If it's relative (/api/candidates), resolve against current site origin.
+    const base = API_BASE.startsWith("http") ? API_BASE : (window.location.origin + API_BASE);
+    const url = new URL(base);
+    url.searchParams.set("top", String(FETCH_TOP));
+    return url.toString();
+  }
 
-    const resp = await fetch(url.toString(), { cache: "no-store" });
-    const data = await resp.json();
+  async function fetchCandidates(){
+    const url = buildApiUrl();
+    const resp = await fetch(url, { cache: "no-store" });
+
+    const text = await resp.text();
+    let data;
+    try { data = JSON.parse(text); }
+    catch {
+      // This usually means you hit a 404 HTML page or a proxy returning non-JSON
+      throw new Error("API did not return JSON. Check API_BASE and /api/candidates path.");
+    }
 
     if(!resp.ok){
       const msg = data?.error ? `${data.error}` : `HTTP ${resp.status}`;
       throw new Error(msg);
     }
-    return data; // expects { items: [...] }
+    return data;
   }
 
   async function fetchAndRender(){
@@ -807,7 +564,7 @@
       const data = await fetchCandidates();
       state.data = data;
       state.fetchedAt = new Date();
-      state.page = 1; // reset page on refresh
+      state.page = 1;
 
       const items = Array.isArray(data.items) ? data.items : [];
       buildFilters(items);
@@ -816,12 +573,14 @@
       state.data = null;
       content.className = "state";
       content.textContent = `Failed to load: ${err.message || err}`;
+      // Also update header so you can see it without opening console
+      el("heroSub").textContent = `Error: ${err.message || err}`;
     }
   }
 
-  /* ============================================================
-    EVENTS
-  ============================================================ */
+  // =========================
+  // Events
+  // =========================
   el("q").addEventListener("input", (e)=> { state.q = e.target.value; state.page = 1; render(); });
   el("sourceSel").addEventListener("change", (e)=> { state.source = e.target.value; state.page = 1; render(); });
   el("topicSel").addEventListener("change", (e)=> { state.topic = e.target.value; state.page = 1; render(); });
@@ -832,18 +591,12 @@
   el("refreshBtn").addEventListener("click", fetchAndRender);
   el("themeBtn").addEventListener("click", toggleTheme);
 
-  // Keyboard shortcuts
   window.addEventListener("keydown", (e)=>{
     if(e.key === "/" && document.activeElement !== el("q")){
-      e.preventDefault();
-      el("q").focus();
+      e.preventDefault(); el("q").focus();
     }
     if(e.key === "Escape"){
-      el("q").value = "";
-      state.q = "";
-      state.page = 1;
-      render();
-      el("q").blur();
+      el("q").value = ""; state.q = ""; state.page = 1; render(); el("q").blur();
     }
   });
 
