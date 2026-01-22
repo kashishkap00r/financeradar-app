@@ -6,170 +6,417 @@
   <title>Indian Finance Radar</title>
 
   <style>
+    /* =========================
+      Clean UI
+      - No gradients
+      - Depth via spacing + subtle shadows
+      - Light default, dark optional
+    ========================= */
+
     :root{
-      --bg:#f6f7fb; --bgGlow1:rgba(124,92,255,.14); --bgGlow2:rgba(45,225,194,.10);
-      --panel:#ffffff; --panelSoft:rgba(17,24,39,.02); --panelInput:rgba(17,24,39,.03);
-      --text:#111827; --muted:#4b5563; --muted2:#6b7280;
-      --border:rgba(17,24,39,.10); --shadow:0 10px 30px rgba(17,24,39,.12);
-      --accent:#7c5cff; --accentSoft:rgba(124,92,255,.12);
-      --chipBg:rgba(124,92,255,.10); --chipBorder:rgba(124,92,255,.18);
-      --radius:16px;
-    }
-    html[data-theme="dark"]{
-      --bg:#0b0f14; --bgGlow1:rgba(124,92,255,.18); --bgGlow2:rgba(45,225,194,.14);
-      --panel:#0f1620; --panelSoft:rgba(255,255,255,.03); --panelInput:rgba(255,255,255,.04);
-      --text:#e9eef7; --muted:#9fb0c8; --muted2:#6f819a;
-      --border:rgba(255,255,255,.08); --shadow:0 10px 30px rgba(0,0,0,.35);
-      --accent:#7c5cff; --accentSoft:rgba(124,92,255,.15);
-      --chipBg:rgba(124,92,255,.15); --chipBorder:rgba(124,92,255,.25);
+      --bg: #f3f5f8;
+      --panel: #ffffff;
+      --panel2: #ffffff;
+      --text: #101828;
+      --muted: #475467;
+      --muted2:#667085;
+
+      --border: rgba(16,24,40,.10);
+      --shadow: 0 10px 25px rgba(16,24,40,.08);
+      --shadow2: 0 4px 14px rgba(16,24,40,.08);
+
+      --accent: #7c5cff;
+      --accentSoft: rgba(124,92,255,.10);
+
+      --chipBg: rgba(124,92,255,.10);
+      --chipBorder: rgba(124,92,255,.18);
+
+      --radius: 18px;
+      --radius2: 12px;
+
+      /* Slightly larger overall */
+      --fs-title: 22px;
+      --fs-body: 15px;
+      --fs-small: 13px;
+      --fs-micro: 12px;
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
+    html[data-theme="dark"]{
+      --bg: #0b0f14;
+      --panel: #0f1620;
+      --panel2: #0f1620;
+      --text: #e9eef7;
+      --muted: #9fb0c8;
+      --muted2:#7f93af;
+
+      --border: rgba(255,255,255,.08);
+      --shadow: 0 14px 30px rgba(0,0,0,.45);
+      --shadow2: 0 6px 18px rgba(0,0,0,.35);
+
+      --accent: #7c5cff;
+      --accentSoft: rgba(124,92,255,.15);
+
+      --chipBg: rgba(124,92,255,.14);
+      --chipBorder: rgba(124,92,255,.22);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      background:
-        radial-gradient(1200px 800px at 20% -10%, var(--bgGlow1), transparent 60%),
-        radial-gradient(900px 700px at 90% 0%, var(--bgGlow2), transparent 55%),
-        var(--bg);
-      color:var(--text);
+      background: var(--bg);
+      color: var(--text);
+      font-size: var(--fs-body);
+      line-height: 1.5;
     }
-    .wrap{max-width:1080px;margin:0 auto;padding:18px 16px 56px}
 
-    .hero{
-      border-radius:var(--radius);
-      padding:18px 20px;
-      background:linear-gradient(180deg,var(--accentSoft),var(--panelSoft));
-      border:1px solid var(--border);
-      box-shadow:var(--shadow);
-      display:flex;justify-content:space-between;gap:12px;align-items:flex-start;
+    .wrap{
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 20px 16px 56px;
     }
-    .heroTitle{margin:0;font-size:18px;font-weight:850;letter-spacing:.2px}
-    .heroSub{margin-top:6px;font-size:12px;color:var(--muted)}
-    .heroRight{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+
+    /* Top header */
+    .top{
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+      align-items:flex-start;
+      margin-bottom: 14px;
+    }
+
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      min-width: 280px;
+    }
+    .brand h1{
+      margin:0;
+      font-size: var(--fs-title);
+      font-weight: 850;
+      letter-spacing: .2px;
+    }
+    .brand .sub{
+      color: var(--muted);
+      font-size: var(--fs-small);
+    }
+
+    .topActions{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
 
     .btn{
-      border:1px solid var(--border);
-      background:var(--panelInput);
-      color:var(--text);
-      padding:10px 12px;
-      border-radius:12px;
-      font-size:12px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: var(--fs-small);
       cursor:pointer;
-      transition:.15s ease;
-      display:flex;align-items:center;gap:8px;white-space:nowrap;user-select:none;
+      transition: .12s ease;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+      box-shadow: var(--shadow2);
     }
-    .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
-    .btn:active{transform:translateY(0)}
+    .btn:hover{ transform: translateY(-1px); }
+    .btn:active{ transform: translateY(0px); box-shadow: none; }
 
-    .panel{
-      margin-top:14px;
-      border:1px solid var(--border);
-      background:var(--panelSoft);
-      border-radius:var(--radius);
-      padding:14px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+    /* Main container */
+    .shell{
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--panel2);
+      box-shadow: var(--shadow);
+      padding: 14px;
     }
-    .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+    /* Controls row */
+    .controls{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--panel);
+    }
+
     .search{
-      flex:1;min-width:240px;
-      display:flex;align-items:center;gap:10px;
-      padding:10px 12px;border-radius:12px;border:1px solid var(--border);
-      background:var(--panelInput);
+      flex: 1;
+      min-width: 260px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding: 12px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--panel);
     }
-    .search input{width:100%;border:0;outline:0;background:transparent;color:var(--text);font-size:13px}
+    .search input{
+      width:100%;
+      border:0;
+      outline:0;
+      background: transparent;
+      color: var(--text);
+      font-size: var(--fs-body);
+    }
+
     select{
-      border:1px solid var(--border);
-      background:var(--panelInput);
-      color:var(--text);
-      padding:10px 12px;border-radius:12px;font-size:13px;min-width:190px;outline:none;
-    }
-    .toggles{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-left:auto}
-    .toggle{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:12px;user-select:none;white-space:nowrap}
-    .toggle input{transform:translateY(1px)}
-
-    .metaRow{
-      margin-top:10px;
-      display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
-      color:var(--muted);font-size:12px;
-    }
-    .metaRow strong{color:var(--text);font-weight:750}
-    .pill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:7px 10px;border-radius:999px;font-size:12px;color:var(--muted);
-      border:1px solid var(--border);background:var(--panelInput);white-space:nowrap;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--text);
+      padding: 12px 12px;
+      border-radius: 12px;
+      font-size: var(--fs-body);
+      min-width: 200px;
+      outline: none;
     }
 
-    .pager{margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-    .pageBtns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-    .pageBtn{
-      border:1px solid var(--border);
-      background:var(--panelInput);
-      color:var(--text);
-      padding:8px 10px;border-radius:10px;font-size:12px;cursor:pointer;
-      transition:.12s ease;min-width:38px;text-align:center;user-select:none;
+    .toggles{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-left:auto;
     }
-    .pageBtn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
-    .pageBtn:active{transform:translateY(0)}
-    .pageBtn.active{border-color:rgba(124,92,255,.45);box-shadow:0 0 0 3px rgba(124,92,255,.12);font-weight:800}
-    .pageBtn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
 
-    .state{
-      margin-top:14px;border:1px solid var(--border);background:var(--panelSoft);
-      border-radius:var(--radius);padding:18px;color:var(--muted);font-size:13px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
-    }
-    .list{margin-top:14px;display:flex;flex-direction:column;gap:10px}
-    .card{
-      background:linear-gradient(180deg,var(--panel),var(--panel));
-      border:1px solid var(--border);border-radius:var(--radius);
-      padding:14px;box-shadow:0 1px 0 rgba(255,255,255,.06);transition:.15s ease;
-    }
-    .card:hover{transform:translateY(-1px);box-shadow:var(--shadow);border-color:rgba(124,92,255,.35)}
-    .card.read{opacity:.72}
-    .cardTop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
-    .headline{margin:0;font-size:14px;line-height:1.35;font-weight:760}
-    .headline a{color:var(--text);text-decoration:none}
-    .headline a:hover{text-decoration:underline}
-    .actions{display:flex;gap:8px;align-items:center;flex-shrink:0}
-    .mini{
-      border:1px solid var(--border);background:var(--panelInput);color:var(--text);
-      padding:6px 10px;border-radius:10px;font-size:12px;cursor:pointer;transition:.12s ease;
+    .toggle{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      color: var(--muted);
+      font-size: var(--fs-small);
       user-select:none;
+      white-space:nowrap;
     }
-    .mini:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
-    .mini:active{transform:translateY(0)}
-    .mini.starred{border-color:rgba(45,225,194,.35)}
-    .mini.read{border-color:rgba(124,92,255,.35)}
-    .sub{margin-top:8px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;color:var(--muted);font-size:12px}
+    .toggle input{ transform: scale(1.05); }
+
+    /* Meta row */
+    .metaRow{
+      margin-top: 12px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      color: var(--muted);
+      font-size: var(--fs-small);
+      padding: 0 6px;
+    }
+    .metaRow strong{ color: var(--text); font-weight: 800; }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      font-size: var(--fs-small);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      background: var(--panel);
+      white-space:nowrap;
+      box-shadow: var(--shadow2);
+    }
+
+    /* Pagination */
+    .pager{
+      margin-top: 10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      padding: 0 6px;
+    }
+    .pageBtns{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .pageBtn{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: var(--fs-small);
+      cursor:pointer;
+      transition:.12s ease;
+      min-width: 44px;
+      text-align:center;
+      user-select:none;
+      box-shadow: var(--shadow2);
+    }
+    .pageBtn:hover{ transform: translateY(-1px); }
+    .pageBtn:active{ transform: translateY(0); box-shadow:none; }
+    .pageBtn.active{
+      border-color: rgba(124,92,255,.50);
+      box-shadow: 0 0 0 3px rgba(124,92,255,.18);
+      font-weight: 900;
+      color: var(--text);
+    }
+    .pageBtn:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+      transform:none;
+      box-shadow:none;
+    }
+
+    /* List */
+    .state{
+      margin-top: 14px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 18px;
+      color: var(--muted);
+      font-size: var(--fs-body);
+      box-shadow: var(--shadow2);
+    }
+
+    .list{
+      margin-top: 14px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .card{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow2);
+      transition: .12s ease;
+    }
+    .card:hover{
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+      border-color: rgba(124,92,255,.30);
+    }
+    .card.read{ opacity: .72; }
+
+    .cardTop{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:flex-start;
+    }
+
+    .headline{
+      margin:0;
+      font-size: 16px;
+      line-height: 1.35;
+      font-weight: 850;
+    }
+    .headline a{
+      color: var(--text);
+      text-decoration:none;
+    }
+    .headline a:hover{ text-decoration:underline; }
+
+    .actions{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex-shrink:0;
+    }
+
+    .mini{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--text);
+      padding: 8px 10px;
+      border-radius: 12px;
+      font-size: var(--fs-small);
+      cursor:pointer;
+      transition:.12s ease;
+      user-select:none;
+      box-shadow: var(--shadow2);
+    }
+    .mini:hover{ transform: translateY(-1px); }
+    .mini:active{ transform: translateY(0); box-shadow:none; }
+    .mini.starred{ border-color: rgba(45,225,194,.35); }
+    .mini.read{ border-color: rgba(124,92,255,.35); }
+
+    .sub{
+      margin-top: 10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      color: var(--muted);
+      font-size: var(--fs-small);
+    }
+
     .chip{
-      display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;
-      background:var(--chipBg);border:1px solid var(--chipBorder);color:var(--text);font-size:11px;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--chipBg);
+      border: 1px solid var(--chipBorder);
+      color: var(--text);
+      font-size: var(--fs-micro);
+      font-weight: 700;
     }
+
     .pillSmall{
-      display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;font-size:11px;
-      color:var(--muted);border:1px solid var(--border);background:var(--panelInput);
+      display:inline-flex;
+      align-items:center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: var(--fs-micro);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      background: var(--panel);
+      box-shadow: var(--shadow2);
     }
-    .footer{margin-top:22px;color:var(--muted2);font-size:12px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-    code{color:var(--muted)}
+
+    /* Footer credits */
+    .credits{
+      margin-top: 16px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      color: var(--muted2);
+      font-size: var(--fs-small);
+      padding: 0 6px;
+    }
+
+    code{ color: var(--muted); }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <div class="hero">
-      <div>
-        <h1 class="heroTitle">Indian Finance Radar</h1>
-        <div class="heroSub" id="heroSub">Loading…</div>
+
+    <div class="top">
+      <div class="brand">
+        <h1>Indian Finance Radar</h1>
+        <div class="sub" id="heroSub">Loading…</div>
       </div>
-      <div class="heroRight">
-        <button class="btn" id="themeBtn" title="Toggle Day/Night">🌞 Day</button>
-        <button class="btn" id="refreshBtn" title="Refresh">⟳ Refresh</button>
+
+      <div class="topActions">
+        <button class="btn" id="themeBtn" title="Toggle Day/Night">Light</button>
+        <button class="btn" id="refreshBtn" title="Refresh">Refresh</button>
       </div>
     </div>
 
-    <div class="panel">
+    <div class="shell">
       <div class="controls">
         <div class="search">
           <input id="q" placeholder="Search news…" autocomplete="off" />
@@ -201,76 +448,40 @@
         <div class="pill" id="pageMeta">Page — of —</div>
         <div class="pageBtns" id="pageBtns"></div>
       </div>
+
+      <div id="content" class="state">Fetching items…</div>
+
+      <div class="credits">
+        <div>Made by Kashish Kapoor</div>
+        <div>Made for The Daily Brief by Zerodha</div>
+      </div>
     </div>
 
-    <div id="content" class="state">Fetching items…</div>
-
-    <div class="footer">
-      <div>Tip: press <code>/</code> to search · <code>Esc</code> clears · Read/Star saved on this device.</div>
-      <div class="muted">Uses <code>/api/candidates?top=500</code> and paginates client-side.</div>
-    </div>
   </div>
 
 <script>
   // =========================
   // CONFIG
   // =========================
-  // If API is on same domain as this UI:
-  //   const API_BASE = "/api/candidates";
-  // If API is on another domain:
-  //   const API_BASE = "https://financeradar.kashishkapoor.com/api/candidates";
   const API_BASE = "https://financeradar.pages.dev/api/candidates";
-
   const FETCH_TOP = 500;
   const PAGE_SIZE = 50;
   const MAX_VISIBLE_PAGES = 10;
 
   // =========================
-  // Helpers + DOM
+  // DOM helper
   // =========================
   const el = (id) => document.getElementById(id);
-
-  function escapeHtml(str){
-    return String(str ?? "")
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
-  }
-  function hostFromUrl(url){
-    try { return new URL(url).hostname.replace(/^www\./,""); }
-    catch { return ""; }
-  }
-  function fmtTime(d){
-    try{ return d.toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" }); }
-    catch{ return "—"; }
-  }
-  function fmtDate(iso){
-    if(!iso) return "";
-    try{
-      const d = new Date(iso);
-      return d.toLocaleDateString(undefined, { month:"short", day:"numeric" });
-    }catch{ return ""; }
-  }
-  function uniqSorted(arr){
-    return Array.from(new Set(arr)).sort((a,b)=> a.localeCompare(b));
-  }
 
   // =========================
   // Theme (light default)
   // =========================
-  const THEME_KEY = "ifr_theme";
+  const THEME_KEY = "ifr_theme_v3";
   function updateThemeButton(theme){
     const btn = el("themeBtn");
     if(!btn) return;
-    if(theme === "dark"){
-      btn.textContent = "🌙 Night";
-      btn.title = "Switch to Day";
-    }else{
-      btn.textContent = "🌞 Day";
-      btn.title = "Switch to Night";
-    }
+    btn.textContent = theme === "dark" ? "Dark" : "Light";
+    btn.title = theme === "dark" ? "Switch to Light" : "Switch to Dark";
   }
   function initTheme(){
     const saved = localStorage.getItem(THEME_KEY);
@@ -287,9 +498,9 @@
   }
 
   // =========================
-  // Read/Star store
+  // Store read/star (device-only)
   // =========================
-  const STORE_KEY = "ifr_state_v2";
+  const STORE_KEY = "ifr_state_v3";
   function loadStore(){
     try{
       const raw = localStorage.getItem(STORE_KEY);
@@ -320,8 +531,37 @@
     page: 1
   };
 
-  // Must run AFTER el() is defined
   initTheme();
+
+  // =========================
+  // Utilities
+  // =========================
+  function escapeHtml(str){
+    return String(str ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+  function hostFromUrl(url){
+    try { return new URL(url).hostname.replace(/^www\./,""); }
+    catch { return ""; }
+  }
+  function fmtTime(d){
+    try{ return d.toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" }); }
+    catch{ return "—"; }
+  }
+  function fmtDate(iso){
+    if(!iso) return "";
+    try{
+      const d = new Date(iso);
+      return d.toLocaleDateString(undefined, { month:"short", day:"numeric" });
+    }catch{ return ""; }
+  }
+  function uniqSorted(arr){
+    return Array.from(new Set(arr)).sort((a,b)=> a.localeCompare(b));
+  }
 
   // =========================
   // Filters + Pagination
@@ -401,7 +641,6 @@
     parts.push(`<button class="pageBtn" data-page="next" ${state.page===totalPages?"disabled":""}>Next</button>`);
 
     box.innerHTML = parts.join("");
-
     box.querySelectorAll(".pageBtn").forEach(btn=>{
       btn.addEventListener("click", ()=>{
         const v = btn.getAttribute("data-page");
@@ -527,26 +766,15 @@
   // =========================
   // Fetch
   // =========================
-  function buildApiUrl(){
-    // If API_BASE is absolute (starts with http), use it directly.
-    // If it's relative (/api/candidates), resolve against current site origin.
-    const base = API_BASE.startsWith("http") ? API_BASE : (window.location.origin + API_BASE);
-    const url = new URL(base);
-    url.searchParams.set("top", String(FETCH_TOP));
-    return url.toString();
-  }
-
   async function fetchCandidates(){
-    const url = buildApiUrl();
-    const resp = await fetch(url, { cache: "no-store" });
+    const url = new URL(API_BASE);
+    url.searchParams.set("top", String(FETCH_TOP)); // 500
+    const resp = await fetch(url.toString(), { cache: "no-store" });
 
     const text = await resp.text();
     let data;
     try { data = JSON.parse(text); }
-    catch {
-      // This usually means you hit a 404 HTML page or a proxy returning non-JSON
-      throw new Error("API did not return JSON. Check API_BASE and /api/candidates path.");
-    }
+    catch { throw new Error("API did not return JSON."); }
 
     if(!resp.ok){
       const msg = data?.error ? `${data.error}` : `HTTP ${resp.status}`;
@@ -573,7 +801,6 @@
       state.data = null;
       content.className = "state";
       content.textContent = `Failed to load: ${err.message || err}`;
-      // Also update header so you can see it without opening console
       el("heroSub").textContent = `Error: ${err.message || err}`;
     }
   }
@@ -600,7 +827,7 @@
     }
   });
 
-  // Initial load
+  // Initial
   fetchAndRender();
 </script>
 </body>
